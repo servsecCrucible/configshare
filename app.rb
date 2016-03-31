@@ -42,7 +42,7 @@ class ShareConfigurationsApp < Sinatra::Base
       { configuration: Configuration.find(params[:id]) }.to_json
     rescue => e
       status 404
-      e.inspect
+      logger.info "FAILED to GET configuration: #{e.inspect}"
     end
   end
 
@@ -61,7 +61,7 @@ class ShareConfigurationsApp < Sinatra::Base
       redirect '/api/v1/configurations/' + new_config.id + '.json'
     rescue => e
       status 400
-      logger.info "FAILED to create new config: #{e}"
+      logger.info "FAILED to create new config: #{e.inspect}"
     end
   end
 end

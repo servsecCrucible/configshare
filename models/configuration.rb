@@ -38,7 +38,7 @@ class Configuration
   end
 
   def self.find(find_id)
-    config_file = File.read(Configuration::STORE_DIR + find_id + '.txt')
+    config_file = File.read(STORE_DIR + find_id + '.txt')
     Configuration.new JSON.parse(config_file)
   end
 
