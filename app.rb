@@ -58,7 +58,7 @@ class ShareConfigurationsApp < Sinatra::Base
         halt 400, "Could not store config: #{new_config}"
       end
 
-      redirect '/api/v1/configurations/' + new_config.id + '.txt'
+      redirect '/api/v1/configurations/' + new_config.id + '.json'
     rescue => e
       status 400
       logger.info "FAILED to create new config: #{e}"
