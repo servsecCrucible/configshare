@@ -10,6 +10,10 @@ class ShareConfigurationsApp < Sinatra::Base
     File.read(STORE_DIR + id + '.txt')
   end
 
+  before do
+    Dir.mkdir(STORE_DIR) unless Dir.exist? STORE_DIR
+  end
+
   get '/?' do
     'ConfigShare web service is up and running at /api/v1'
   end
