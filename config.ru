@@ -1,2 +1,2 @@
 require './app.rb'
-run ShareCredentials
+run ShareConfigurationsApp

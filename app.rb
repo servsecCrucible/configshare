@@ -2,54 +2,56 @@ require 'sinatra'
 require 'json'
 require 'base64'
 
-# Security Credential Sharing Web Service
-class ShareCredentials < Sinatra::Base
+# Configuration Sharing Web Service
+class ShareConfigurationsApp < Sinatra::Base
+  STORE_DIR = 'public/'.freeze
 
-  def credentials_file(id)
-    credential_file = File.read('public/'+id+'.txt')
+  def configurations(id)
+    File.read(STORE_DIR + id + '.txt')
   end
 
   get '/?' do
-    'Share Credentials web app is up and running at /api/v1'
+    'ConfigShare web service is up and running at /api/v1'
   end
 
   get '/api/v1' do
-    # TODO: show all routes as json doc
+    # TODO: show all routes as json with links
   end
 
-  get '/api/v1/credentials/?' do
+  get '/api/v1/configurations/?' do
     content_type 'application/json'
 
-    credentials_list = Dir.glob('public/*.txt').map do |filename|
-      filename.match(/public\/(.*)\.txt/)[1]
+    configurations_list = Dir.glob(STORE_DIR + '*.txt').map do |filename|
+      filename.match(%r{public\/(.*)\.txt})[1]
     end
 
-    {credentials: credentials_list }.to_json
+    { configuration_id: configurations_list }.to_json
   end
 
-  get '/api/v1/credentials/:id.txt' do
+  get '/api/v1/configurations/:id.txt' do
     content_type 'text/plain'
 
     begin
-      credentials_file(params[:id])
-    rescue => e
-      status 404
-    end
-  end
-
-  get '/api/v1/credentials/:id.json' do
-    content_type 'application/json'
-
-    begin
-      creds = Base64.strict_encode64(credentials_file(params[:id]))
-      { credentials: creds }.to_json
+      configurations(params[:id])
     rescue => e
       status 404
       e.inspect
     end
   end
 
-  post '/api/v1/credentials/new' do
-    # TODO: let users create new credential files
+  get '/api/v1/configurations/:id.json' do
+    content_type 'application/json'
+
+    begin
+      configs = Base64.strict_encode64(configurations(params[:id]))
+      { configurations: configs }.to_json
+    rescue => e
+      status 404
+      e.inspect
+    end
+  end
+
+  post '/api/v1/configurations/new' do
+    # TODO: let users create new configuration files
   end
 end
