@@ -28,11 +28,13 @@ class Configuration
   end
 
   def save
-    filename = STORE_DIR + @id + '.txt'
-
-    File.open(filename, 'w') do |file|
+    File.open(STORE_DIR + @id + '.txt', 'w') do |file|
       file.write(to_json)
     end
+
+    true
+  rescue
+    false
   end
 
   def self.find(find_id)

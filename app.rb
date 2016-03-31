@@ -52,13 +52,16 @@ class ShareConfigurationsApp < Sinatra::Base
     begin
       new_data = JSON.parse(request.body.read)
       new_config = Configuration.new(new_data)
-      new_config.save
-      logger.info "NEW CONFIGURATION STORED: #{new_config.id}"
+      if new_config.save
+        logger.info "NEW CONFIGURATION STORED: #{new_config.id}"
+      else
+        halt 400, "Could not store config: #{new_config}"
+      end
 
       redirect '/api/v1/configurations/' + new_config.id + '.txt'
     rescue => e
       status 400
-      puts e.inspect
+      logger.info "FAILED to create new config: #{e}"
     end
   end
 end
