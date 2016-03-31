@@ -52,6 +52,23 @@ class ShareConfigurationsApp < Sinatra::Base
   end
 
   post '/api/v1/configurations/new' do
-    # TODO: let users create new configuration files
+    content_type 'application/json'
+
+    begin
+      request_params = JSON.parse request.body.read
+      new_configurations = Base64.strict_decode64(request_params['config_data'])
+      new_id = Base64.urlsafe_encode64(Digest::SHA256.digest(Time.now.to_s))
+      filename = STORE_DIR + new_id[0..9] + '.txt'
+
+      File.open(filename, 'w') do |file|
+        puts "NEW CONFIG FILE CREATED: #{filename}"
+        file.write(new_configurations)
+      end
+
+      redirect '/api/v1/configurations/' + new_id + '.txt'
+    rescue => e
+      status 400
+      puts e.inspect
+    end
   end
 end
