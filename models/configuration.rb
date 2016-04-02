@@ -2,7 +2,7 @@ require 'json'
 
 # Holds a full configuration document information
 class Configuration
-  STORE_DIR = 'public/'.freeze
+  STORE_DIR = 'db/'.freeze
 
   attr_accessor :id, :project, :name, :description, :document
 
