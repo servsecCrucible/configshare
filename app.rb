@@ -4,7 +4,7 @@ require 'base64'
 require_relative 'models/configuration'
 
 # Configuration Sharing Web Service
-class ShareConfigurationsApp < Sinatra::Base
+class ShareConfigurationsAPI < Sinatra::Base
   before do
     Configuration.setup
   end
