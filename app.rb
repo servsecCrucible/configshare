@@ -25,6 +25,32 @@ class ShareConfigurationsAPI < Sinatra::Base
     JSON.pretty_generate(data: Project.all)
   end
 
+  get '/api/v1/projects/:id' do
+    content_type 'application/json'
+
+    id = params[:id]
+    project = Project[id]
+    configurations = project ? Project[id].configurations : []
+
+    if project
+      JSON.pretty_generate(data: project, relationships: configurations)
+    else
+      halt 404, "PROJECT NOT FOUND: #{id}"
+    end
+  end
+
+  post '/api/v1/projects/?' do
+    begin
+      new_data = JSON.parse(request.body.read)
+      saved_project = Project.create(new_data)
+    rescue => e
+      logger.info "FAILED to create new project: #{e.inspect}"
+      halt 400
+    end
+
+    redirect URI.join(@request_url.to_s + '/' + saved_project.id.to_s)
+  end
+
   get '/api/v1/projects/:id/configurations/?' do
     content_type 'application/json'
 
@@ -67,8 +93,6 @@ class ShareConfigurationsAPI < Sinatra::Base
   end
 
   post '/api/v1/projects/:project_id/configurations/?' do
-    content_type 'application/json'
-
     begin
       new_data = JSON.parse(request.body.read)
       project = Project[params[:project_id]]
