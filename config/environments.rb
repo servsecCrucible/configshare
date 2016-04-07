@@ -1,5 +1,7 @@
 configure :development do
   set :database_url, 'sqlite://db/dev.db'
+  require 'hirb'
+  Hirb.enable
 end
 
 configure :test do

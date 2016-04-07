@@ -4,7 +4,12 @@ GEM
     bond (0.5.1)
     daemons (1.2.3)
     eventmachine (1.2.0.1)
+    ffi (1.9.10)
+    hirb (0.7.3)
     json (1.8.3)
+    listen (3.0.5)
+      rb-fsevent (>= 0.9.3)
+      rb-inotify (>= 0.9)
     minitest (5.8.3)
     rack (1.6.4)
     rack-protection (1.5.3)
@@ -12,6 +17,11 @@ GEM
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
+    rb-fsevent (0.9.6)
+    rb-inotify (0.9.5)
+      ffi (>= 0.5.0)
+    rerun (0.11.0)
+      listen (~> 3.0)
     ripl (0.7.1)
       bond (~> 0.5.1)
     ripl-multi_line (0.3.1)
@@ -21,8 +31,6 @@ GEM
       rack-test (~> 0.6.2)
       ripl (>= 0.7.0)
     sequel (4.32.0)
-    shotgun (0.9.1)
-      rack (>= 1.0)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -43,13 +51,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  hirb
   json
   minitest
   rack
   rack-test
   rake
+  rerun
   sequel
-  shotgun
   sinatra
   sqlite3
   thin

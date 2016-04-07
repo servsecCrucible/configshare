@@ -8,8 +8,9 @@ gem 'sequel'
 gem 'sqlite3'
 
 group :development do
-  gem 'shotgun'
+  gem 'rerun'
   gem 'tux'
+  gem 'hirb'
 end
 
 group :test do
