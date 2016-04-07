@@ -1,5 +1,7 @@
+require 'json'
 require 'sequel'
 
+# Holds a Project's information
 class Project < Sequel::Model
   one_to_many :configurations
 
