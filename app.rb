@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'json'
-require 'base64'
 require_relative 'config/environments'
 require_relative 'models/init'
 
