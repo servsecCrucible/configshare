@@ -1,14 +1,11 @@
 require 'sinatra'
 require 'json'
 require 'base64'
-require_relative 'models/configuration'
+require_relative 'config/environments'
+require_relative 'models/init'
 
 # Configuration Sharing Web Service
 class ShareConfigurationsAPI < Sinatra::Base
-  before do
-    Configuration.setup
-  end
-
   get '/?' do
     'ConfigShare web service is up and running at /api/v1'
   end
@@ -17,11 +14,18 @@ class ShareConfigurationsAPI < Sinatra::Base
     # TODO: show all routes as json with links
   end
 
-  get '/api/v1/configurations/?' do
+  get '/api/v1/projects/?' do
     content_type 'application/json'
-    id_list = Configuration.all
 
-    { configuration_id: id_list }.to_json
+    JSON.pretty_generate(data: Project.all)
+  end
+
+  get '/api/v1/projects/:project_id/configurations/?' do
+    content_type 'application/json'
+
+    project = Project[params[:project_id]]
+
+    JSON.pretty_generate(data: project.configurations)
   end
 
   get '/api/v1/configurations/:id/document' do
