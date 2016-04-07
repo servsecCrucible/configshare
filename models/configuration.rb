@@ -1,4 +1,5 @@
 require 'json'
+require 'base64'
 
 # Holds a full configuration file's information
 class Configuration < Sequel::Model
@@ -10,10 +11,14 @@ class Configuration < Sequel::Model
             data: {
               name: filename,
               description: description,
-              document: document
+              base64_document: base64_document
             }
           },
          options)
+  end
+
+  def document
+    Base64.strict_decode64 base64_document
   end
 end
 

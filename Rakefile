@@ -9,7 +9,7 @@ namespace :db do
 
   desc 'Run migrations'
   task :migrate do |_, args|
-    puts "Migration for environment: #{ENV['RACK_ENV']}"
+    puts "Environment: #{ENV['RACK_ENV'] | 'development'}"
     if args[:version]
       puts "Migrating to version #{args[:version]}"
       Sequel::Migrator.run(DB, 'db/migrations', target: args[:version].to_i)

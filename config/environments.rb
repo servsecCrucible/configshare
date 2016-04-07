@@ -5,3 +5,7 @@ end
 configure :test do
   set :database_url, 'sqlite://db/test.db'
 end
+
+configure do
+  enable :logging
+end
