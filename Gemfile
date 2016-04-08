@@ -5,7 +5,6 @@ gem 'sinatra'
 gem 'thin'
 gem 'json'
 gem 'sequel'
-gem 'sqlite3'
 
 group :development do
   gem 'rerun'
@@ -18,4 +17,8 @@ group :test do
   gem 'rack'
   gem 'rack-test'
   gem 'rake'
+end
+
+group :development, :test do
+  gem 'sqlite3'
 end
