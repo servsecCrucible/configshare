@@ -47,7 +47,10 @@ class ShareConfigurationsAPI < Sinatra::Base
       halt 400
     end
 
-    redirect URI.join(@request_url.to_s + '/' + saved_project.id.to_s)
+    new_location = URI.join(@request_url.to_s + '/', saved_project.id.to_s).to_s
+
+    status 201
+    headers('Location' => new_location)
   end
 
   get '/api/v1/projects/:id/configurations/?' do
@@ -101,6 +104,8 @@ class ShareConfigurationsAPI < Sinatra::Base
       halt 400
     end
 
-    redirect URI.join(@request_url.to_s + '/' + saved_config.id.to_s)
+    status 201
+    new_location = URI.join(@request_url.to_s + '/', saved_config.id.to_s).to_s
+    headers('Location' => new_location)
   end
 end

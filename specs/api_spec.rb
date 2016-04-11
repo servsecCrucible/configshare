@@ -19,7 +19,7 @@ describe 'Project resource calls' do
       req_header = { 'CONTENT_TYPE' => 'application/json' }
       req_body = { name: 'Demo Project' }.to_json
       post '/api/v1/projects/', req_body, req_header
-      _(last_response.status).must_equal 302
+      _(last_response.status).must_equal 201
       _(last_response.location).must_match(%r{http://})
     end
 
@@ -56,23 +56,29 @@ describe 'Project resource calls' do
   end
 end
 
-describe 'Test creating configuration resources' do
-  before do
-    Project.dataset.delete
-    Configuration.dataset.delete
-  end
-
-  it 'should catch duplicate config files within a project' do
-    # p = Project.create(name: 'class_demo')
-    # p.add_configuration(filename: 'filename.rb',
-    #                     base64_document: 'LS0tCnNlcnZlcl9uYW1lOiBhcGkuZXhhbXBsZS5vcmc=')
-    # duplicate_call = -> { p.add_configuration(filename: 'filename.rb') }
-    # _(duplicate_call).must_raise Sequel::UniqueConstraintViolation
-  end
-end
-
-describe 'Test idemptotent GET routes' do
-  before do
-
-  end
-end
+# describe 'Test creating configuration resources' do
+#   before do
+#     Project.dataset.delete
+#     Configuration.dataset.delete
+#
+#     req_header = { 'CONTENT_TYPE' => 'application/json' }
+#     req_body = { name: 'Demo Project' }.to_json
+#     post '/api/v1/projects/', req_body, req_header
+#     @existing_project = Project.first
+#   end
+#
+#   describe 'Adding new configurations to projects' do
+#     it 'should add a new configuration for an existing project' do
+#       # post "/api/v1/projects/#{existing_project.id}/configurations"
+#
+#     end
+#
+#     it 'should catch duplicate config files within a project' do
+#       # p = Project.create(name: 'class_demo')
+#       # p.add_configuration(filename: 'filename.rb',
+#       #                     base64_document: 'LS0tCnNlcnZlcl9uYW1lOiBhcGkuZXhhbXBsZS5vcmc=')
+#       # duplicate_call = -> { p.add_configuration(filename: 'filename.rb') }
+#       # _(duplicate_call).must_raise Sequel::UniqueConstraintViolation
+#     end
+#   end
+# end
