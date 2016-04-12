@@ -24,8 +24,18 @@ Install this API by cloning the *relevant branch* and installing required gems:
 
     $ bundle install
 
+## Testing
+
+Test this API by running:
+
+    $ bundle exec rake spec
+
 ## Execute
 
-Run this API by using:
+Run this API during deployment:
 
-    $ rackup
+    $ bundle exec rackup
+
+or use autoloading during development:
+
+    $ bundle exec rerun rackup
