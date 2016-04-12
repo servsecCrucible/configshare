@@ -43,7 +43,7 @@ describe 'Testing Project resource routes' do
     end
 
     it 'SAD: should not find non-existent projects' do
-      get "/api/v1/projects/#{rand(1..1000)}"
+      get "/api/v1/projects/#{invalid_id(Project)}"
       _(last_response.status).must_equal 404
     end
   end
