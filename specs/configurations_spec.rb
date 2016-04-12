@@ -50,8 +50,15 @@ describe 'Testing Configuration resource routes' do
       _(parsed_config['type']).must_equal 'configuration'
     end
 
-    it 'SAD: should not find non-existant configuration' do
+    it 'SAD: should not find non-existant project and configuration' do
       proj_id = invalid_id(Project)
+      config_id = invalid_id(Configuration)
+      get "/api/v1/projects/#{proj_id}/configurations/#{config_id}"
+      _(last_response.status).must_equal 404
+    end
+
+    it 'SAD: should not find non-existant configuration for existing project' do
+      proj_id = Project.create(name: 'Demo Project').id
       config_id = invalid_id(Configuration)
       get "/api/v1/projects/#{proj_id}/configurations/#{config_id}"
       _(last_response.status).must_equal 404
