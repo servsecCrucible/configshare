@@ -42,9 +42,18 @@ describe 'Testing Project resource routes' do
       end
     end
 
-    it 'SAD: it should not find non-existent projects' do
+    it 'SAD: should not find non-existent projects' do
       get "/api/v1/projects/#{rand(1..1000)}"
       _(last_response.status).must_equal 404
+    end
+  end
+
+  describe 'Getting an index of existing projects' do
+    it 'HAPPY: should find list of existing projects' do
+      (1..5).each { |i| Project.create(name: "Project #{i}") }
+      result = get '/api/v1/projects'
+      projs = JSON.parse(result.body)
+      _(projs['data'].count).must_equal 5
     end
   end
 end
