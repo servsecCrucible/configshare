@@ -28,12 +28,14 @@ Install this API by cloning the *relevant branch* and installing required gems:
 
 Test this API by running:
 
+    $ rake db:migrate RACK_ENV=test
     $ bundle exec rake spec
 
 ## Execute
 
 Run this API during deployment:
 
+    $ rake db:migrate (If switching from test environment)
     $ bundle exec rackup
 
 or use autoloading during development:
